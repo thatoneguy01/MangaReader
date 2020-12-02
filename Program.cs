@@ -14,6 +14,7 @@ namespace MangaReader
         [STAThread]
         static void Main()
         {
+            Controller.Startup();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ReaderForm());
