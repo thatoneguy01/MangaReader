@@ -77,10 +77,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datatypes\Chapter.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="HtmlCompare.cs" />
-    <Compile Include="Manga.cs" />
+    <Compile Include="Datatypes\Manga.cs" />
     <Compile Include="ReaderForm.cs">
       <SubType>Form</SubType>
     </Compile>

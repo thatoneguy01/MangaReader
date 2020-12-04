@@ -29,7 +29,7 @@ namespace MangaReader
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            Scraper.ProcessPage("https://manganelo.com/manga/df918379");
+            Scraper.GetChapterUrls("https://manganelo.com/manga/df918379");
         }
     }
 }

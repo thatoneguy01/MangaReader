@@ -9,7 +9,7 @@ namespace MangaReader
 {
     class Controller
     {
-        private static String dataPath = null;
+        public static String dataPath = null;
         public static void Startup()
         {
             var appdataRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -22,5 +22,6 @@ namespace MangaReader
         {
 
         }
+
     }
 }
