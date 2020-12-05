@@ -22,14 +22,31 @@ namespace MangaReader
 
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            var color = mangaTableRow1.title.ForeColor;
+            int i = 0;
+        }
+
+        private void txtbxAddFav_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private void btnAddFav_Click(object sender, EventArgs e)
         {
-            Scraper.GetChapterUrls("https://manganelo.com/manga/df918379");
+
         }
+
+        private void backgroundWorkerRefresh_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void backgroundWorkerAddFav_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
     }
 }
