@@ -10,6 +10,8 @@ namespace MangaReader
 {
     class Scraper
     {
+        private static Dictionary<String, HtmlDocument> cache;
+
         public static IList<String> GetChapterUrls(String url)
         {
             String mangaId = url.Substring(url.LastIndexOf('/')+1);

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MangaReader
 {
@@ -14,18 +16,20 @@ namespace MangaReader
             this.imageUrl = Scraper.GetMangaImage(url);
             var chapterUrls = Scraper.GetChapterUrls(url);
             this.chapters = chapterUrls.Select(chapterUrl => new Chapter(chapterUrl, true)).ToList();
+            this.title = Scraper.GetMangaTitle(url);
+            this.url = url;
         }
 
         public Manga(string name, string id, string url, string imageUrl, IList<Chapter> readChapters, IList<Chapter> unreadChapters)
         {
-            this.name = name;
+            this.title = name;
             this.id = id;
             this.url = url;
             this.imageUrl = imageUrl;
             this.chapters = readChapters;
         }
 
-        public string name { get; set; }
+        public string title { get; set; }
         public string id { get; set; }
         public string url { get; set; }
         public string imageUrl { get; set; }
@@ -39,7 +43,7 @@ namespace MangaReader
         public bool Equals(Manga other)
         {
             return other != null &&
-                   name == other.name &&
+                   title == other.title &&
                    id == other.id &&
                    url == other.url &&
                    imageUrl == other.imageUrl &&
@@ -49,7 +53,7 @@ namespace MangaReader
         public override int GetHashCode()
         {
             int hashCode = -746865582;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(title);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(id);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(url);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(imageUrl);
@@ -59,7 +63,7 @@ namespace MangaReader
 
         public void GetNewChapters()
         {
-            DataManager dm = new DataManager(Controller.dataPath);
+            DataManager dm = new DataManager();
             var currentChapterUrls = Scraper.GetChapterUrls(this.url);
             var currentChapters = currentChapterUrls.Select(chapterUrl => new Chapter(chapterUrl, true)).ToList();
             var unreadChapters = currentChapters.Except(this.chapters);
@@ -72,6 +76,15 @@ namespace MangaReader
             }
             this.chapters = currentChapters;
             dm.UpdateFavorite(this);
+        }
+
+        public void PopulateListBox(ListBox listBox)
+        {
+            listBox.Items.Add("foobar");
+            //foreach (Chapter c in this.chapters)
+            //{
+            //    listBox.Items.Add());
+            //}
         }
     }
 }

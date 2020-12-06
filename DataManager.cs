@@ -5,17 +5,31 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace MangaReader
 {
     class DataManager
     {
-        private String dataPath;
-        private static IList<Manga> favoritesData = null;
+        private static String dataPath;
+        private static String favsImgPath;
+        private static IList<Manga> favoritesData;
 
-        public DataManager(String dataPath)
+        public DataManager()
         {
-            this.dataPath = dataPath;
+            var appdataRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appdataPath = Path.Combine(appdataRoot, "MangaReader");
+            if (!Directory.Exists(appdataPath))
+            {
+                Directory.CreateDirectory(appdataPath);
+            }
+            var favImgPath = Path.Combine(appdataPath, "favsCoverImages");
+            if (!Directory.Exists(favImgPath)) 
+            {
+                Directory.CreateDirectory(favImgPath);
+            }
+            dataPath = appdataPath;
+            favsImgPath = favImgPath;
         }
 
         public IList<Manga> GetFavorites()
@@ -46,6 +60,10 @@ namespace MangaReader
         
         public void AddFavorite(Manga manga)
         {
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(new Uri(manga.imageUrl), Path.Combine(favsImgPath, manga.id+".jpg"));
+            }
             favoritesData.Add(manga);
         }
 
@@ -57,8 +75,12 @@ namespace MangaReader
 
         public void RemoveFavorite(String name)
         {
-            favoritesData = favoritesData.Where(manga => manga.name != name).ToList();
+            favoritesData = favoritesData.Where(manga => manga.title != name).ToList();
         }
 
+        public string ImgPathForMangaId(String id)
+        {
+            return Path.Combine(favsImgPath, id + ".jpg");
+        }
     }
 }
