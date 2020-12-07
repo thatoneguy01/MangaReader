@@ -31,18 +31,18 @@ namespace MangaReader
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.imgCover = new System.Windows.Forms.PictureBox();
-            this.lblUnread = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imgCover = new System.Windows.Forms.PictureBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblUnread = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imgCover)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgCover)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -51,6 +51,7 @@ namespace MangaReader
             // 
             // splitContainer1
             // 
+            this.splitContainer1.ContextMenuStrip = this.contextMenuStrip1;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
@@ -68,40 +69,6 @@ namespace MangaReader
             this.splitContainer1.SplitterDistance = 53;
             this.splitContainer1.TabIndex = 0;
             // 
-            // imgCover
-            // 
-            this.imgCover.BackColor = System.Drawing.SystemColors.Window;
-            this.imgCover.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imgCover.Location = new System.Drawing.Point(0, 0);
-            this.imgCover.MinimumSize = new System.Drawing.Size(53, 0);
-            this.imgCover.Name = "imgCover";
-            this.imgCover.Size = new System.Drawing.Size(53, 70);
-            this.imgCover.TabIndex = 0;
-            this.imgCover.TabStop = false;
-            // 
-            // lblUnread
-            // 
-            this.lblUnread.BackColor = System.Drawing.Color.Transparent;
-            this.lblUnread.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblUnread.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUnread.ForeColor = System.Drawing.Color.Red;
-            this.lblUnread.Location = new System.Drawing.Point(0, 0);
-            this.lblUnread.Name = "lblUnread";
-            this.lblUnread.Size = new System.Drawing.Size(158, 17);
-            this.lblUnread.TabIndex = 1;
-            this.lblUnread.Text = "Unread Chapter(s)";
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.BackColor = System.Drawing.SystemColors.Window;
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(158, 52);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "label1";
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -116,8 +83,21 @@ namespace MangaReader
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // imgCover
+            // 
+            this.imgCover.BackColor = System.Drawing.SystemColors.Window;
+            this.imgCover.ContextMenuStrip = this.contextMenuStrip1;
+            this.imgCover.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgCover.Location = new System.Drawing.Point(0, 0);
+            this.imgCover.MinimumSize = new System.Drawing.Size(53, 0);
+            this.imgCover.Name = "imgCover";
+            this.imgCover.Size = new System.Drawing.Size(53, 70);
+            this.imgCover.TabIndex = 0;
+            this.imgCover.TabStop = false;
+            // 
             // splitContainer2
             // 
+            this.splitContainer2.ContextMenuStrip = this.contextMenuStrip1;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
@@ -133,9 +113,36 @@ namespace MangaReader
             this.splitContainer2.Panel2.Controls.Add(this.lblUnread);
             this.splitContainer2.Panel2MinSize = 13;
             this.splitContainer2.Size = new System.Drawing.Size(158, 70);
-            this.splitContainer2.SplitterDistance = 52;
+            this.splitContainer2.SplitterDistance = 41;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 2;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.BackColor = System.Drawing.SystemColors.Window;
+            this.lblTitle.ContextMenuStrip = this.contextMenuStrip1;
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(158, 41);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "label1";
+            // 
+            // lblUnread
+            // 
+            this.lblUnread.BackColor = System.Drawing.Color.Transparent;
+            this.lblUnread.ContextMenuStrip = this.contextMenuStrip1;
+            this.lblUnread.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblUnread.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUnread.ForeColor = System.Drawing.Color.Red;
+            this.lblUnread.Location = new System.Drawing.Point(0, 0);
+            this.lblUnread.Name = "lblUnread";
+            this.lblUnread.Size = new System.Drawing.Size(158, 28);
+            this.lblUnread.TabIndex = 1;
+            this.lblUnread.Text = "Unread Chapter(s)";
+            this.lblUnread.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.lblUnread.Visible = false;
             // 
             // MangaTableRow
             // 
@@ -143,6 +150,7 @@ namespace MangaReader
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.CausesValidation = false;
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.splitContainer1);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "MangaTableRow";
@@ -151,8 +159,8 @@ namespace MangaReader
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.imgCover)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.imgCover)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();

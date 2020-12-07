@@ -10,6 +10,10 @@ namespace MangaReader
 {
     public class Manga : IEquatable<Manga>
     {
+        public Manga()
+        {
+        }
+
         public Manga(String url)
         {
             this.id = url.Substring(url.LastIndexOf('/') + 1);
@@ -20,13 +24,13 @@ namespace MangaReader
             this.url = url;
         }
 
-        public Manga(string name, string id, string url, string imageUrl, IList<Chapter> readChapters, IList<Chapter> unreadChapters)
+        public Manga(string name, string id, string url, string imageUrl, IList<Chapter> chapters)
         {
             this.title = name;
             this.id = id;
             this.url = url;
             this.imageUrl = imageUrl;
-            this.chapters = readChapters;
+            this.chapters = chapters;
         }
 
         public string title { get; set; }
@@ -80,11 +84,19 @@ namespace MangaReader
 
         public void PopulateListBox(ListBox listBox)
         {
-            listBox.Items.Add("foobar");
-            //foreach (Chapter c in this.chapters)
-            //{
-            //    listBox.Items.Add());
-            //}
+            listBox.Items.Clear();
+            int i = 4;
+            foreach (Chapter c in this.chapters)
+            {
+                if (c.read)
+                {
+                    listBox.Items.Add(c.name);
+                }
+                else
+                {
+                    listBox.Items.Add("***"+c.name);
+                }
+            }
         }
     }
 }

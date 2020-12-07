@@ -10,12 +10,13 @@ namespace MangaReader
 {
     class Scraper
     {
-        private static Dictionary<String, HtmlDocument> cache;
+        private static Dictionary<String, HtmlDocument> cache = new Dictionary<string, HtmlDocument>();
 
         public static IList<String> GetChapterUrls(String url)
         {
             String mangaId = url.Substring(url.LastIndexOf('/')+1);
             var html = GetHtmlFromPage(url);
+            cache[url] = html;
             var links = ExtractLinks(html);
             links = FilterLinks(links, mangaId);
             foreach (String link in links)
@@ -46,21 +47,48 @@ namespace MangaReader
 
         public static String GetMangaImage(String url)
         {
-            var html = GetHtmlFromPage(url);
+            HtmlDocument html;
+            if (!cache.ContainsKey(url))
+            {
+                html = GetHtmlFromPage(url);
+                cache[url] = html;
+            }
+            else
+            {
+                html = cache[url];
+            }
             String imgUrl = html.DocumentNode.SelectSingleNode("//span[@class='info-image']/img").GetAttributeValue("src", null);
             return imgUrl;
         }
 
         public static String GetMangaTitle(String url)
         {
-            var html = GetHtmlFromPage(url);
+            HtmlDocument html;
+            if (!cache.ContainsKey(url))
+            {
+                html = GetHtmlFromPage(url);
+                cache[url] = html;
+            }
+            else
+            {
+                html = cache[url];
+            }
             String title = html.DocumentNode.SelectSingleNode("//div[@class='story-info-right']/h1").InnerText;
             return title;
         }
 
         public static IList<String> GetChapterContents(String url)
         {
-            var html = GetHtmlFromPage(url);
+            HtmlDocument html;
+            if (!cache.ContainsKey(url))
+            {
+                html = GetHtmlFromPage(url);
+                cache[url] = html;
+            }
+            else
+            {
+                html = cache[url];
+            }
             var imgNodes = html.DocumentNode.SelectSingleNode("//div[@class='container-chapter-reader']").SelectNodes("//img[@src]");
             return imgNodes.Select(node => node.GetAttributeValue("src", null)).ToList();
         }

@@ -41,11 +41,11 @@ namespace MangaReader
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.panelTblScroll = new System.Windows.Forms.Panel();
             this.tblFavManga = new System.Windows.Forms.TableLayoutPanel();
-            this.mangaTableRow1 = new MangaReader.MangaTableRow();
             this.listChapter = new System.Windows.Forms.ListBox();
-            this.flowReader = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelReader = new System.Windows.Forms.Panel();
             this.backgroundWorkerRefresh = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerAddFav = new System.ComponentModel.BackgroundWorker();
+            this.mangaTableRow1 = new MangaReader.MangaTableRow();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -73,6 +73,8 @@ namespace MangaReader
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(3, 3);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(10);
             this.splitContainer1.Name = "splitContainer1";
@@ -125,7 +127,7 @@ namespace MangaReader
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.flowReader);
+            this.splitContainer2.Panel2.Controls.Add(this.panelReader);
             this.splitContainer2.Size = new System.Drawing.Size(1182, 528);
             this.splitContainer2.SplitterDistance = 399;
             this.splitContainer2.TabIndex = 0;
@@ -133,6 +135,8 @@ namespace MangaReader
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer3.IsSplitterFixed = true;
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -147,6 +151,7 @@ namespace MangaReader
             this.splitContainer3.Size = new System.Drawing.Size(399, 528);
             this.splitContainer3.SplitterDistance = 25;
             this.splitContainer3.TabIndex = 0;
+            this.splitContainer3.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer3_SplitterMoved);
             // 
             // splitContainer5
             // 
@@ -172,6 +177,8 @@ namespace MangaReader
             this.txtbxAddFav.Name = "txtbxAddFav";
             this.txtbxAddFav.Size = new System.Drawing.Size(350, 20);
             this.txtbxAddFav.TabIndex = 0;
+            this.txtbxAddFav.Text = "https://manganelo.com/manga/df918379";
+            this.txtbxAddFav.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtbxAddFav_KeyDown);
             // 
             // btnAddFav
             // 
@@ -225,27 +232,16 @@ namespace MangaReader
             this.tblFavManga.Location = new System.Drawing.Point(0, 0);
             this.tblFavManga.Name = "tblFavManga";
             this.tblFavManga.RowCount = 1;
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tblFavManga.Size = new System.Drawing.Size(238, 89);
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tblFavManga.Size = new System.Drawing.Size(238, 118);
             this.tblFavManga.TabIndex = 0;
-            // 
-            // mangaTableRow1
-            // 
-            this.mangaTableRow1.BackColor = System.Drawing.SystemColors.Window;
-            this.mangaTableRow1.CausesValidation = false;
-            this.mangaTableRow1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.mangaTableRow1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mangaTableRow1.Location = new System.Drawing.Point(4, 4);
-            this.mangaTableRow1.Name = "mangaTableRow1";
-            this.mangaTableRow1.Size = new System.Drawing.Size(230, 81);
-            this.mangaTableRow1.TabIndex = 0;
             // 
             // listChapter
             // 
@@ -257,16 +253,14 @@ namespace MangaReader
             this.listChapter.TabIndex = 0;
             this.listChapter.SelectedIndexChanged += new System.EventHandler(this.listChapter_SelectedIndexChanged);
             // 
-            // flowReader
+            // panelReader
             // 
-            this.flowReader.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.flowReader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowReader.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowReader.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.flowReader.Location = new System.Drawing.Point(0, 0);
-            this.flowReader.Name = "flowReader";
-            this.flowReader.Size = new System.Drawing.Size(779, 528);
-            this.flowReader.TabIndex = 0;
+            this.panelReader.AutoScroll = true;
+            this.panelReader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelReader.Location = new System.Drawing.Point(0, 0);
+            this.panelReader.Name = "panelReader";
+            this.panelReader.Size = new System.Drawing.Size(779, 528);
+            this.panelReader.TabIndex = 0;
             // 
             // backgroundWorkerRefresh
             // 
@@ -275,6 +269,17 @@ namespace MangaReader
             // backgroundWorkerAddFav
             // 
             this.backgroundWorkerAddFav.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerAddFav_DoWork);
+            // 
+            // mangaTableRow1
+            // 
+            this.mangaTableRow1.BackColor = System.Drawing.SystemColors.Window;
+            this.mangaTableRow1.CausesValidation = false;
+            this.mangaTableRow1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.mangaTableRow1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mangaTableRow1.Location = new System.Drawing.Point(4, 4);
+            this.mangaTableRow1.Name = "mangaTableRow1";
+            this.mangaTableRow1.Size = new System.Drawing.Size(230, 110);
+            this.mangaTableRow1.TabIndex = 0;
             // 
             // ReaderForm
             // 
@@ -285,6 +290,7 @@ namespace MangaReader
             this.Name = "ReaderForm";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "MangaReader";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ReaderForm_FormClosing);
             this.Load += new System.EventHandler(this.MangaReader_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -326,12 +332,12 @@ namespace MangaReader
         private System.Windows.Forms.TextBox txtbxAddFav;
         private System.Windows.Forms.Button btnAddFav;
         private System.Windows.Forms.SplitContainer splitContainer4;
-        private System.Windows.Forms.FlowLayoutPanel flowReader;
         private System.ComponentModel.BackgroundWorker backgroundWorkerAddFav;
         private System.Windows.Forms.ListBox listChapter;
         private System.Windows.Forms.Panel panelTblScroll;
         private System.Windows.Forms.TableLayoutPanel tblFavManga;
         private MangaTableRow mangaTableRow1;
+        private System.Windows.Forms.Panel panelReader;
     }
 }
 

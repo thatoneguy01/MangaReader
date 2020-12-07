@@ -18,10 +18,6 @@ namespace MangaReader
         public Color backgroundColor;
         public Manga manga;
 
-        [Browsable(true)]
-        [Category("Action")]
-        [Description("Invoked when user clicks the delete context menu item for a manga table row")]
-        public event EventHandler contextDeleteClick;
         public MangaTableRow()
         {
             InitializeComponent();
@@ -30,11 +26,6 @@ namespace MangaReader
             this.unread = lblUnread;
             lblTitle.ForeColor = Control.DefaultForeColor;
             this.backgroundColor = this.BackColor;
-        }
-
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            contextDeleteClick?.Invoke(this, e);
         }
 
         public void SetAllClicks(EventHandler eventHandler, Control parent = null)
@@ -49,6 +40,25 @@ namespace MangaReader
                 SetAllClicks(eventHandler, childControl);  
             }
             
+        }
+
+        public void SetAllBackgroundColor(Color c, Control parent = null)
+        {
+            if (parent is null)
+            {
+                parent = this;
+            }
+            parent.BackColor = c;
+            foreach (Control childControl in parent.Controls)
+            {
+                SetAllBackgroundColor(c, childControl);
+            }
+
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ReaderForm)this.TopLevelControl).MangaTableRow_ContextDeleteClicked(this, e);
         }
     }
 }

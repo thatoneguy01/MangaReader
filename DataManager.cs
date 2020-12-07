@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Security.AccessControl;
 
 namespace MangaReader
 {
@@ -36,6 +37,10 @@ namespace MangaReader
         {
             if (favoritesData is null)
             {
+                if (!File.Exists(Path.Combine(dataPath, "favorites.json")))
+                {
+                    File.WriteAllText(Path.Combine(dataPath, "favorites.json"), "[]");
+                }
                 string text = File.ReadAllText(Path.Combine(dataPath, "favorites.json"));
                 IList<Manga> favoritesList = JsonConvert.DeserializeObject<IList<Manga>>(text);
                 favoritesData = favoritesList;
@@ -49,7 +54,7 @@ namespace MangaReader
 
         public void SaveFavorites()
         {
-            File.WriteAllText(dataPath, JsonConvert.SerializeObject(favoritesData));
+            File.WriteAllText(Path.Combine(dataPath, "favorites.json"), JsonConvert.SerializeObject(favoritesData));
         }
 
         public IList<String> GetFavoritesUrls()
@@ -69,13 +74,21 @@ namespace MangaReader
 
         public void UpdateFavorite(Manga manga)
         {
+            var favorites = GetFavorites();
             var favCopyIndex = favoritesData.IndexOf(favoritesData.Where(fav => fav.id == manga.id).FirstOrDefault());
-            favoritesData.ElementAt(favCopyIndex).chapters = manga.chapters;
+            favorites.ElementAt(favCopyIndex).chapters = manga.chapters;
         }
 
         public void RemoveFavorite(String name)
         {
-            favoritesData = favoritesData.Where(manga => manga.title != name).ToList();
+            var favorites = GetFavorites();
+            favorites = favorites.Where(manga => manga.title != name).ToList();
+        }
+
+        public Manga FavoriteWithUrl(String url)
+        {
+            var favorites = GetFavorites();
+            return favorites.Where(fav => fav.url == url).First();
         }
 
         public string ImgPathForMangaId(String id)
