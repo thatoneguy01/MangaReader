@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -82,30 +83,78 @@ namespace MangaReader
             }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnRefresh_Click(object sender, EventArgs e)
         {
-            DataManager dm = new DataManager();
-            foreach (String url in dm.GetFavoritesUrls())
+            var progress = new Progress<ProgressData>(data =>
             {
-                var chapters = Scraper.GetChapterUrls(url);
-                var beforeManga = dm.FavoriteWithUrl(url);
-                MangaTableRow mangaRow = GetMangaTableRowWithManga(beforeManga);
-                int inserted = 0;
-                foreach (String chapterUrl in chapters)
-                {
-                    if (!beforeManga.chapters.Select(ch => ch.url).Contains(chapterUrl))
-                    {
-                        Chapter newChapter = new Chapter(chapterUrl, false);
-                        beforeManga.chapters.Insert(inserted++, newChapter);
-                        //mangaRow.manga.chapters.Insert(0, newChapter);
-                        mangaRow.unread.Visible = true;
-                    }
-                }
-            }
+                data.mangaRow.unread.Visible = true;
+                data.beforeManga.chapters.Insert(data.insertIndex, data.newChapter);
+            });
+            await Task.Factory.StartNew(() => this.WorkerRefresh_DoWork(progress),
+                                TaskCreationOptions.LongRunning);
             this.selectedRow?.manga.PopulateListBox(listChapter);
         }
 
+        public partial class ProgressData 
+        {
+            public MangaTableRow mangaRow;
+            public Manga beforeManga;
+            public Chapter newChapter;
+            public int insertIndex;
+
+            public ProgressData(MangaTableRow mangaRow, Manga beforeManga, Chapter newChapter, int insertIndex)
+            {
+                this.mangaRow = mangaRow;
+                this.beforeManga = beforeManga;
+                this.newChapter = newChapter;
+                this.insertIndex = insertIndex;
+            }
+        }
+
         private void btnAddFav_Click(object sender, EventArgs e)
+        {
+            if (!backgroundWorkerAddFav.IsBusy)
+            {
+                backgroundWorkerAddFav.RunWorkerAsync();
+            }
+        }
+
+        private void WorkerRefresh_DoWork(IProgress<ProgressData> progress)
+        {
+            DataManager dm = new DataManager();
+            var favUrls = dm.GetFavoritesUrls();
+            Task[] tasks = new Task[favUrls.Count];
+            int taskNum = 0;
+            foreach (String url in favUrls)
+            {
+                tasks[taskNum++] = Task.Factory.StartNew(() => this.RefreshThreadWork(url, progress));
+            }
+            Task.WaitAll(tasks);
+        }
+
+        private void RefreshThreadWork(String url, IProgress<ProgressData> progress)
+        {
+            //String url = objUrl as String;
+            DataManager dm = new DataManager();
+            var chapters = Scraper.GetChapterUrls(url);
+            var beforeManga = dm.FavoriteWithUrl(url);
+            var chapUrls = new List<String>();
+            chapUrls.AddRange(beforeManga.chapters.Select(ch => ch.url));
+            MangaTableRow mangaRow = GetMangaTableRowWithManga(beforeManga);
+            int inserted = 0;
+            foreach (String chapterUrl in chapters)
+            {
+                if (!chapUrls.Contains(chapterUrl))
+                {
+                    Chapter newChapter = new Chapter(chapterUrl, false);
+                    //beforeManga.chapters.Insert(inserted++, newChapter);
+                    //mangaRow.manga.chapters.Insert(0, newChapter);
+                    progress.Report(new ProgressData(mangaRow, mangaRow.manga, newChapter, inserted++));
+                }
+            }
+        }
+
+        private void backgroundWorkerAddFav_DoWork(object sender, DoWorkEventArgs e)
         {
             if (Uri.IsWellFormedUriString(txtbxAddFav.Text, UriKind.Absolute) && txtbxAddFav.Text.StartsWith(@"https://manganelo.com/manga/"))
             {
@@ -120,16 +169,6 @@ namespace MangaReader
             {
                 Application.Run(new BadUrlPopup());
             }
-        }
-
-        private void backgroundWorkerRefresh_DoWork(object sender, DoWorkEventArgs e)
-        {
-
-        }
-
-        private void backgroundWorkerAddFav_DoWork(object sender, DoWorkEventArgs e)
-        {
-
         }
 
         private void AddFavMangaTableRow(MangaTableRow row)

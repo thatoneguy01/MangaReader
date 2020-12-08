@@ -85,7 +85,6 @@ namespace MangaReader
         public void PopulateListBox(ListBox listBox)
         {
             listBox.Items.Clear();
-            int i = 4;
             foreach (Chapter c in this.chapters)
             {
                 if (c.read)
